@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Shower Presentation Engine</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+</head>
+
+<body class="shower list">
+
+    <header class="caption">
+        <h1>Shower Presentation Engine</h1>
+        <p>Yours Truly, Famous Inc.</p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>Стримы и потоки в NodeJS</h2>
+        <img class="coverImg" src="pictures/glav-2.jpg" alt="Hands on the orange typewriter in a park">
+        <style>
+            #cover {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #cover h2 {
+                color: var(--color-grey);
+                text-align: center;
+                font-size: 70px;
+            }
+
+            .coverImg {
+                width: 578px;
+                height: 344px;
+                align-self: center;
+                border-radius: 8px;
+
+            }
+
+            #cover p {
+                margin: 10px 0 0;
+                text-align: center;
+                color: white;
+                font-style: italic;
+                font-size: 20px;
+            }
+
+            #cover p a {
+                color: white;
+            }
+
+            .myPhoto {
+                width: 35%;
+                border-radius: 8px;
+            }
+
+            .aboutMeWrapper {
+                display: flex;
+            }
+
+            .about-me-list {
+                position: relative;
+                left: 140px;
+            }
+
+            .streamImg {
+                width: 100%;
+            }
+
+            .writableImg {
+                width: 116%;
+                position: relative;
+                top: -60px;
+                left: -62px;
+            }
+
+            .pipeImg {
+                display: block;
+                width: 65%;
+                margin: auto;
+                position: relative;
+                top: -27px;
+            }
+
+            .eventsImg {
+                top: 0;
+            }
+
+            .writeImg {
+                top: -31px;
+            }
+
+            .method-header {
+                line-height: 29px;
+            }
+
+            .speaker {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+    </section>
+
+    <section class="slide">
+        <h2>Бергалиев Нурсултан</h2>
+        <div class="aboutMeWrapper">
+            <img src="pictures/P90623-122631.jpg" class="myPhoto" alt="">
+            <ul class="about-me-list">
+                <li>Middle Frontend in <b>Zebrains (Invitro)</b></li>
+                <li>В свободное время изучаю ноду</li>
+            </ul>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>Загрузка большого файла без стрима</h2>
+        <video src="pictures/non-stream.mp4" style="width: 100%" autoplay muted></video>
+    </section>
+    <section class="slide">
+        <h2>Загрузка большого файла со стримом</h2>
+        <video src="pictures/stream.mp4" style="width: 100%" autoplay muted></video>
+    </section>
+    <section class="slide">
+        <h2>Про стримы концептуально</h2>
+        <p>Данные передаются блоками (chunks) от источника (Input) к конечному процессу (Output)
+        </p>
+        <img class="streamImg" src="pictures/streams.png" alt="">
+    </section>
+
+    <section class="slide">
+        <h2>Виды стримов</h2>
+        <img src="pictures/streamsTypes.png" class="streamImg" />
+    </section>
+
+    <section class="slide">
+        <h2>Readable</h2>
+        <img src="pictures/readable.png" class="writableImg" />
+    </section>
+    <section class="slide">
+        <h2>Writable</h2>
+        <img src="pictures/writable.png" class="writableImg" />
+    </section>
+    <section class="slide">
+        <h2>Duplex</h2>
+        <img src="pictures/duplex.png" class="writableImg" />
+    </section>
+    <section class="slide">
+        <h2>Transform</h2>
+        <img src="pictures/transform.png" class="writableImg" />
+    </section>
+    <section class="slide">
+        <h2>Pipe</h2>
+        <img src="pictures/pipe3.png" class="pipeImg streamImg" alt="">
+    </section>
+
+    <section class="slide">
+        <h3 class="method-header">Метод возвращает стримы, что позволяет чейнить вызовы, как методы jquery</h3>
+        <img src="pictures/pipe.png" class="writableImg" />
+    </section>
+
+    <section class="slide">
+        <h2>События readableStream</h2>
+        <ul>
+            <li><b>data</b> - событие чтения</li>
+            <li><b>end</b> - когда нечего передавать</li>
+            <li><b>error</b> - ошибка при чтении</li>
+        </ul>
+    </section>
+
+    <section class="slide" id="picture">
+        <img src="pictures/readableEvents.png" class="writableImg eventsImg" alt="">
+    </section>
+
+    <section class="slide">
+        <h2>События writableStream</h2>
+        <ul>
+            <li><b>drain</b> - говорит о пустом буфере, когда можно продолжить запись</li>
+            <li><b>finish</b> - когда нечего принимать</li>
+            <li><b>error</b> - ошибка при записи</li>
+
+        </ul>
+    </section>
+
+    <section class="slide">
+        <img src="pictures/drain.png" class="writableImg writeImg" alt="">
+    </section>
+    <section class="slide">
+        <img src="pictures/fileStream.png" class="writableImg eventsImg" alt="">
+    </section>
+    <section class="slide">
+        <h2>Подробнее про событие drain</h2>
+        <p>Может возникнуть кейс, когда скорости стримов различаются.В этой ситуации node.js будет хранить данные в
+            памяти до тех
+            пор, пока медленный поток не сможет их обработать. Чтобы избежать этого, stream.write возвращает false,
+            когда базовый
+            внутренний буфер переполнен. После того, как данные из буфера запишутся в стрим и он станет пустым,
+            сработает событие
+            drain.</p>
+    </section>
+    <section class="slide">
+        <h2 style="margin-top: 70px">Стримы позволяют эффективно работать с файлами. Можно ли быстрее? </h2>
+
+    </section>
+    <section class="slide" id="see-more">
+        <h2>
+            Потоки (threads)
+        </h2>
+        <p><b>Однопоточность</b> и <b>многопоточность</b> - способы работы с вводом\выводом.</p>
+    </section>
+    <section class="slide" id="see-more">
+        <h2>
+            Многопоточность
+        </h2>
+        <img src="pictures/blocking.png" class="streamImg" style="width: 111%; position: relative;
+    left: -49px;
+    top: -50px;" />
+    </section>
+    <section class="slide" id="see-more">
+        <h2>
+            Однопоточность
+        </h2>
+        <img src="pictures/non-blocking.png" class="streamImg"
+            style="width: 115%; position: relative; left: -48px; top: 10px;" />
+    </section>
+    <section class="slide" id="see-more">
+        <h2>
+            Node.js использует два вида потоков:
+        </h2>
+        <ul>
+            <li>Основной поток (event loop)</li>
+            <li>Вспомогательные потоки в пуле воркеров (libuvi)</li>
+        </ul>
+    </section>
+    <section class="slide" id="see-more">
+        <h2>
+            Как многопоточность может нам помочь?
+        </h2>
+        <ul>
+            <li>Параллельное выполнение CPU-ёмких JavaScript-операций => <br> сокращение времени ожидания ответа от
+                сервера</li>
+            <li>Использование промежуточных данных </li>
+        </ul>
+    </section>
+    <section class="slide" id="see-more">
+        <h2>
+            Итоги
+        </h2>
+        <ul>
+            <li>Узнали что такое стримы, зачем они нужны, как применять</li>
+            <li>Узнали про многопоточность, и как она может ускорить наше приложение </li>
+        </ul>
+    </section>
+    <section class="slide" id="see-more">
+        <h2 style="text-align: center;">
+            Ссылки на полезные материалы
+        </h2>
+        <img src="pictures/qr.png" alt="" style="display: block; margin: auto; width: 44%;">
+    </section>
+    <section class="slide speaker" id="see-more">
+        <p><b>Спикер:</b> Нурсултан Бергалиев</p>
+        <p><b>Tg:</b> @trueAnysound</p>
+    </section>
+    <footer class="badge">
+        <a href="https://github.com/shower/shower">Fork me on GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="node_modules/@shower/core/dist/shower.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+
+</body>
+
+</html>
